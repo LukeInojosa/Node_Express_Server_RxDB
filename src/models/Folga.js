@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import {pessoaSchema} from "./Pessoa.js";
+import Controller from "../controllers/Folga.js";
 
 const folgaSchema = new mongoose.Schema({
     pessoa: pessoaSchema,
@@ -9,6 +10,8 @@ const folgaSchema = new mongoose.Schema({
         ano: Number
     }
 });
+
+folgaSchema.loadClass(Controller)
 
 const folgaModel = mongoose.model('folga',folgaSchema);
 

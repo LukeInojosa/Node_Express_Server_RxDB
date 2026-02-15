@@ -1,9 +1,11 @@
 // router é um middleware que registra rotas
 import { Router } from "express";
+import { pessoaModel } from "../models/Pessoa.js"
 
-const router = new Router()
+const router = new Router({mergeParams:true})
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+    console.log(await pessoaModel.getAll())
     res.send('pessoa')
 })
 
