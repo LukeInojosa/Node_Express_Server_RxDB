@@ -1,18 +1,25 @@
 import mongoose from "mongoose";
 import {pessoaSchema} from "./Pessoa.js";
 import Controller from "../controllers/Transferencia.js";
+import { diaSchema } from "./dia.js";
 
 const transfSchema = new mongoose.Schema({
-    pessoa: pessoaSchema,
+    pessoa: {
+        type: pessoaSchema,
+        required: true
+    },
     origem: {
-        dia: Number,
-        mes: Number,
-        ano: Number
+        type: diaSchema,
+        required: true
+    },
+    destino: {
+        type: diaSchema,
+        required: true
     }
 })
 
 transfSchema.loadClass(Controller)
 
-const transfModel = mongoose.model('transferencias',transfSchema)
+const transfModel = mongoose.model('transferencia',transfSchema)
 
 export {transfSchema, transfModel}

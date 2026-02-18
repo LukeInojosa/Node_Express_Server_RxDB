@@ -1,14 +1,11 @@
 import mongoose from "mongoose";
 import {pessoaSchema} from "./Pessoa.js";
 import Controller from "../controllers/Folga.js";
+import { diaSchema } from "./dia.js";
 
 const folgaSchema = new mongoose.Schema({
     pessoa: pessoaSchema,
-    data: {
-        dia: Number,
-        mes: Number,
-        ano: Number
-    }
+    data: diaSchema
 });
 
 folgaSchema.loadClass(Controller)
