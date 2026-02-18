@@ -5,7 +5,8 @@ import { diaSchema } from "./dia.js";
 
 const transfSchema = new mongoose.Schema({
     pessoa: {
-        type: pessoaSchema,
+        type: mongoose.Schema.ObjectId,
+        ref: 'pessoa',
         required: true
     },
     origem: {

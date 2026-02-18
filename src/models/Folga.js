@@ -4,8 +4,15 @@ import Controller from "../controllers/Folga.js";
 import { diaSchema } from "./dia.js";
 
 const folgaSchema = new mongoose.Schema({
-    pessoa: pessoaSchema,
-    data: diaSchema
+    pessoa: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'pessoa',
+        required: true
+    },
+    data: {
+        type: diaSchema,
+        required: true
+    }
 });
 
 folgaSchema.loadClass(Controller)

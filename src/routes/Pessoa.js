@@ -36,6 +36,33 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.delete('/', async (req, res) => {
+    try {
+        const deletedData = await pessoaModel.findOne(req.query).exec()
+        if(deletedData){
+            const {deletedCount} = await pessoaModel.deleteOne({_id:deletedData._id}).exec()
+            if(deletedCount > 0){
+                res.status(200).send({
+                    status:200,
+                    deletedData
+                })
+            }else{
+                res.status(200).send({
+                    status:200,
+                    message: 'Dado existe , mas não foi possivel deletar'
+                })
+            }
+        }else{
+            res.status(200).send({
+                status:200,
+                message: 'Dado a ser deletado não existe'
+            })
+        }
+    }catch (err){
+        console.log(err)
+    }
+})
+
 
 
 export default router
