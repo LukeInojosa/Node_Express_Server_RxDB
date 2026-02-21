@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import {pessoaSchema} from "./Pessoa.js";
 import Controller from "../controllers/Transferencia.js";
-import { diaSchema } from "./dia.js";
+import { diaSchema } from "./Dia.js";
 
 const transfSchema = new mongoose.Schema({
     pessoa: {

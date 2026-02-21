@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const diaSchema = mongoose.Schema({
+const diaSchema = new mongoose.Schema({
     dia: {
             type:Number,
             required: true,
@@ -16,11 +16,8 @@ const diaSchema = mongoose.Schema({
     ano: {
             type: Number,
             required: true,
-            min: () => {
-                return Number((new Date()).getFullYear)
-            }
         }
-})
+}, {id: false})
 
 const diaModel = mongoose.model('dia',diaSchema)
 
