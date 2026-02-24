@@ -17,7 +17,7 @@ const diaSchema = new mongoose.Schema({
             type: Number,
             required: true,
         }
-}, {id: false})
+}, {_id: false, versionKey:false})
 
 const diaModel = mongoose.model('dia',diaSchema)
 

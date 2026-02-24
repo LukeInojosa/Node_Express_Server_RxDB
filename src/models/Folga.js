@@ -13,7 +13,7 @@ const folgaSchema = new mongoose.Schema({
         type: diaSchema,
         required: true
     }
-});
+}, {versionKey:false});
 
 folgaSchema.loadClass(Controller)
 

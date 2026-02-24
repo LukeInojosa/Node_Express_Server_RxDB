@@ -6,7 +6,7 @@ const pessoaSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-})
+}, {versionKey:false})
 
 pessoaSchema.loadClass(Controller)
 

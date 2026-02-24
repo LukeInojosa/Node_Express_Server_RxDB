@@ -17,7 +17,7 @@ const transfSchema = new mongoose.Schema({
         type: diaSchema,
         required: true
     }
-})
+}, {versionKey:false})
 
 transfSchema.loadClass(Controller)
 

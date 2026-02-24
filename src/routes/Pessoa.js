@@ -1,10 +1,11 @@
 // router é um middleware que registra rotas
 import { Router } from "express";
 import { pessoaModel } from "../models/Pessoa.js"
+import BaseError from "../errorHandler/BaseError.js";
 
 const router = new Router({mergeParams:true})
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
     try{
         const pessoaSaved = await new pessoaModel(req.body).insert()
         
@@ -14,29 +15,24 @@ router.post('/', async (req, res) => {
         })
 
     }catch(err) {
-        console.error(err)
-        res.status(400).send({
-            status: 400,
-            message: 'erro ao cadastrar pessoa'
-        })
+        next(err)
     } 
     
 })
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
     try{
-        const response = await pessoaModel.find(req.query)
-        res.status(200).send(response)
-    }catch (err){
-        console.error(err)
-        res.status(400).send({
-            status: 400,
-            message: 'erro ao pegar pessoa'
+        const pessoas = await pessoaModel.find(req.query)
+        res.status(200).send({
+            status: 200,
+            pessoas
         })
+    }catch (err){
+        next(err)
     }
 })
 
-router.delete('/', async (req, res) => {
+router.delete('/', async (req, res, next) => {
     try {
         const deletedData = await pessoaModel.findOne(req.query).exec()
         if(deletedData){
@@ -47,22 +43,13 @@ router.delete('/', async (req, res) => {
                     deletedData
                 })
             }else{
-                res.status(200).send({
-                    status:200,
-                    message: 'Dado existe , mas não foi possivel deletar'
-                })
+                throw new BaseError(404, "Não foi possivel deletar pessoa")
             }
         }else{
-            res.status(200).send({
-                status:200,
-                message: 'Dado a ser deletado não existe'
-            })
+            throw new BaseError(200, "Não é possível deletar pessoa inexistente")
         }
     }catch (err){
-        res.status(404).send({
-            status: 404,
-            message: 'recurso não encontrado'
-        })
+        next(err)
     }
 })
 
