@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import {pessoaSchema} from "./Pessoa.js";
 import Controller from "../controllers/Folga.js";
 import { diaSchema } from "./Dia.js";
 

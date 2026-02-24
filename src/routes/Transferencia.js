@@ -1,7 +1,7 @@
 // router é um middleware que registra rotas
 import { Router } from "express";
 import { pessoaModel } from "../models/Pessoa.js";
-import { transfModel, transfSchema } from "../models/Transferencia.js";
+import { transfModel } from "../models/Transferencia.js";
 import BaseError from "../errorHandler/BaseError.js";
 
 const router = new Router({mergeParams:true})
@@ -9,7 +9,7 @@ const router = new Router({mergeParams:true})
 router.post('/', async (req,res,next) => {
     try{
         const {id, nome, origem, destino} = req.body
-        
+
         let _id = null
         if(id) _id = id
         else if(nome) _id = await pessoaModel.findOne({nome}) 
@@ -59,7 +59,6 @@ router.get('/', async (req, res, next) => {
     }
 })
 
-
 router.delete('/', async (req, res, next) => {
     try{
         const {id} = req.query
@@ -72,4 +71,5 @@ router.delete('/', async (req, res, next) => {
         next(err)
     }
 })
+
 export default router
