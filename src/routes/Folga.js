@@ -14,7 +14,7 @@ router.get('/entre',
     async (req, res, next) => {
         try{
             const {nome,comeco, fim} = req.validated.query
-            
+
             const result = await folgaModel.find(
                 extractNotNullValues({
                     nome: nome,
@@ -55,6 +55,7 @@ router.get('/', async (req, res, next) => {
 router.post('/', 
     validator([ Validate.data('data'), Validate.nome('nome')]),
     async (req,res, next) => {
+        // não permitir duplicatas: a mesma pessoa cadastrada com a mesma folga duas vezes
         try{
             let {id, nome, data} = req.validated.body
             // se tem o id, cria a pessoa
