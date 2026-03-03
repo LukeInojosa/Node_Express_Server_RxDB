@@ -10,7 +10,8 @@ export default function errorHandler (error,req,res,next){
     send({
         status: error?.status || 400,
         type: error.name,
-        message: error.message
+        message: error.message,
+        errors: error?.errors || {}
     })}
     next()
 }

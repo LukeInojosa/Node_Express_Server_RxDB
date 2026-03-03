@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import Controller from "../controllers/Transferencia.js";
-import { diaSchema } from "./Dia.js";
 
 const transfSchema = new mongoose.Schema({
     pessoa: {
@@ -9,11 +8,11 @@ const transfSchema = new mongoose.Schema({
         required: true
     },
     origem: {
-        type: diaSchema,
+        type: Date,
         required: true
     },
     destino: {
-        type: diaSchema,
+        type: Date,
         required: true
     }
 }, {versionKey:false})

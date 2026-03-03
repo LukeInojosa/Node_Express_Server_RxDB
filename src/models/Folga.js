@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import Controller from "../controllers/Folga.js";
-import { diaSchema } from "./Dia.js";
 
 const folgaSchema = new mongoose.Schema({
     pessoa: {
@@ -9,7 +8,7 @@ const folgaSchema = new mongoose.Schema({
         required: true
     },
     data: {
-        type: diaSchema,
+        type: Date,
         required: true
     }
 }, {versionKey:false});

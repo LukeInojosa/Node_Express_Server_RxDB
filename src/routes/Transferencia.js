@@ -36,29 +36,8 @@ router.post('/', async (req,res,next) => {
 router.get('/', async (req, res, next) => {
     try{
         let {id, nome, origem, destino} = req.query
-        const campos = ['.dia', '.mes', '.ano']
-        let query = {}
-
-        if (origem){
-            origem = origem.
-            split('/').
-            map((val,i) => ['origem' + campos[i], Number(val)] ).
-            filter(([key, value]) => value)
-
-            origem = Object.fromEntries(origem)
-            query = {...query, ...origem}
-        }
+        let query = {origem, destino}
         
-        if(destino){
-            destino = destino.
-            split('/').
-            map((val,i) => ['destino' + campos[i], Number(val)]).
-            filter(([key, value]) => value)
-
-            destino = Object.fromEntries(destino)
-            query = {...query, ...destino}
-        }
-
         if(id) query = {...query, pessoa: id}
         else if (nome){
             const pessoa = await pessoaModel.findOne({nome})
@@ -72,8 +51,10 @@ router.get('/', async (req, res, next) => {
             }
         }
 
-        console.log(query)
-        const transferencias = await transfModel.find(query)
+        const transferencias = await transfModel.
+        find(query).
+        populate('pessoa')
+
         res.status(200).send({
             status : 200,
             transferencias
