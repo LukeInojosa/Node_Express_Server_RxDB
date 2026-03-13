@@ -4,7 +4,8 @@ import Controller from "../controllers/Pessoa.js";
 const pessoaSchema = new mongoose.Schema({
     nome: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     }
 }, {versionKey:false})
 

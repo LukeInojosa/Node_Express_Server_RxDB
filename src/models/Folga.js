@@ -13,8 +13,8 @@ const folgaSchema = new mongoose.Schema({
     }
 }, {versionKey:false});
 
+folgaSchema.index({pessoa:1, data:1}, {unique: true})
 folgaSchema.loadClass(Controller)
 
 const folgaModel = mongoose.model('folga',folgaSchema);
-
 export {folgaSchema, folgaModel}

@@ -17,6 +17,7 @@ const transfSchema = new mongoose.Schema({
     }
 }, {versionKey:false})
 
+transfSchema.index({pessoa: 1, origem:1, destino:1}, {unique:true})
 transfSchema.loadClass(Controller)
 
 const transfModel = mongoose.model('transferencia',transfSchema)

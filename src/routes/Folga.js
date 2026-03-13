@@ -9,7 +9,7 @@ import { extractNotNullValues } from "./utils.js";
 
 const router = new Router({mergeParams:true})
 
-router.get('/entre',
+router.get('/',
     validator([Validate.data('comeco'), Validate.data('fim'), Validate.nome('nome')]) ,
     async (req, res, next) => {
         try{
@@ -33,23 +33,6 @@ router.get('/entre',
         }catch(err) {
             next(err)
         } 
-})
-
-
-
-router.get('/', async (req, res, next) => {
-    try{
-        const folgas = await folgaModel.
-        find(req.query).
-        populate('pessoa').
-        exec()
-        res.status(200).send({
-            status:200,
-            folgas
-        })
-    }catch (err){
-        next(err)
-    }
 })
 
 router.post('/', 
@@ -90,7 +73,6 @@ router.delete('/' ,
     async (req, res, next) => {
         try{
             const {id, nome, data} = req.validated.query
-
             const {deletedCount} = await folgaModel.deleteMany(
                 extractNotNullValues({
                     _id: id,
@@ -99,7 +81,7 @@ router.delete('/' ,
                 })
             )
 
-            if (deletedCount > 0){
+            if (deletedCount && deletedCount > 0){
                 res.status(200).send({
                     status: 200,
                     deletedCount
@@ -114,6 +96,42 @@ router.delete('/' ,
             next(err)
         }
 })
+
+router.put('/data',
+    validator([Validate.nome('nome'), Validate.data('data')]),
+    async (req,res,next) => {
+        try{
+            let {nome, id} = req.validated.query
+            const {data} = req.validated.body
+
+            if(nome) {
+                const pessoa = await pessoaModel.findOne({nome})
+                id = pessoa._id
+            }
+            if (!id) 
+                throw new BaseError(400, 'é necessário ter o nome ou o id da pessoa')
+
+            const result = await folgaModel.updateOne(
+                {
+                    pessoa: id
+                },
+                { $set: 
+                    extractNotNullValues({
+                        data
+                    })
+                }
+            )
+
+            res.status(200).send({
+                status: 200,
+                result
+            })
+
+        }catch(err){
+            next(err)
+        }
+})
+
 
 // router.get('/intervalo', async (req,res,next) => {
 //     try{
@@ -149,8 +167,4 @@ router.delete('/' ,
 
 // })
 
-// router.get('/intapos', async (req,res,next) => {
-    
-
-// })
 export default router
